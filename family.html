@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Christmas Letter Generator</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+    body {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(rgb(14, 8, 79), rgb(32, 10, 121));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    animation: gradientBG 10s ease infinite alternate, fadeIn 1.2s ease-in;
+    overflow: hidden;
+}
+
+/* Gradient animation */
+@keyframes gradientBG {
+    0% { background: linear-gradient(120deg, rgb(14, 8, 79), rgb(32, 10, 121)); }
+    50% { background: linear-gradient(120deg, rgb(14, 8, 79), rgb(32, 10, 121), #200065); }
+    100% { background: linear-gradient(120deg, rgb(14, 8, 79), rgb(32, 10, 121)); }
+}
+.floating-title {
+    position: fixed;
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 4em;
+    color: #ffdd57;
+    font-weight: 700;
+    text-shadow: 0 0 15px #ffdd57, 0 0 30px #ff6b6b, 0 0 45px #f4a261;
+    z-index: 10;
+    pointer-events: none;
+    animation: floatText 3s ease-in-out infinite alternate, fadeIn 1.2s ease-in;
+}
+@keyframes floatText {
+    0% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-15px); }
+    100% { transform: translateX(-50%) translateY(0); }
+}
+/* Twinkling stars */
+.star {
+    position: fixed;
+    width: 22px;
+    height: 22px;
+    pointer-events: none;
+    opacity: 0;
+    animation: sparkle 3s infinite ease-in-out;
+    z-index: 3;
+    
+}
+
+.star svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 6px rgba(255, 255, 200, 0.9));
+}
+
+
+
+@keyframes sparkle {
+    0%   { opacity: 0; transform: scale(0.5); }
+    30%  { opacity: 1; transform: scale(1.1); }
+    60%  { opacity: 0.7; }
+    100% { opacity: 0; transform: scale(0.5); }
+}
+
+
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+
+    }
+  .reindeer {
+    position: fixed;
+    width: 150px; /* adjust size */
+    z-index: 6; /* above background but below form */
+    pointer-events: none;
+    top: 20%; /* starting vertical position */
+    left: -200px; /* start off-screen */
+    animation: flyReindeer linear infinite;
+}
+
+/* Animate multiple reindeer with different positions & speeds */
+.reindeer1 {
+    top: 60%;
+    animation-duration: 18s;
+    animation-delay: 0s;
+    width: 500px;
+}
+
+
+
+@keyframes flyReindeer {
+    0% { transform: translateX(0) translateY(0) rotate(0deg); opacity: 1; }
+    25% { transform: translateX(25vw) translateY(-10px) rotate(5deg); }
+    50% { transform: translateX(50vw) translateY(5px) rotate(-5deg); }
+    75% { transform: translateX(75vw) translateY(-5px) rotate(3deg); }
+    100% { transform: translateX(110vw) translateY(0) rotate(0deg); opacity: 1; }
+}
+
+
+    .container {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 30px 40px;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        width: 100%;
+        max-width: 400px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .form-group {
+        position: relative;
+    }
+
+    label {
+        position: absolute;
+        top: 12px;
+        left: 15px;
+        font-weight: 600;
+        color: #2a9d8f; /* teal/green like screenshot */
+        transition: all 0.3s ease;
+        pointer-events: none;
+    }
+
+    input, select, textarea {
+        width: 100%;
+        padding: 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        font-size: 1em;
+        background: #f8f9fa;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+        border-color: #2a9d8f;
+        box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.1);
+    }
+
+    input:focus + label, select:focus + label, textarea:focus + label {
+        top: -10px;
+        left: 10px;
+        font-size: 0.8em;
+        color: #e63946;
+    }
+
+    button {
+        padding: 15px;
+        background: linear-gradient(135deg, #e63946, #f4a261);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-size: 1.1em;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+
+    #letter {
+        margin-top: 25px;
+        padding: 20px;
+        background: #fff;
+        border: 2px solid #f4a261;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        font-family: 'Courier New', monospace;
+        white-space: pre-wrap;
+        line-height: 1.6;
+        display: none;
+    }
+    .house{
+    position: fixed;
+    width: 500px;
+    right: 1%;
+    bottom: 5%;
+    z-index: 5;
+}
+    .snowflake {
+  position: fixed;
+  top: -10px;
+  color: white;
+  font-size: 1em;
+  pointer-events: none;
+  animation: fall linear infinite;
+  z-index: 5;
+}
+
+@keyframes fall {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+.snow-ground {
+    position:fixed;
+    bottom: 0px;
+    right: 0px;
+    pointer-events: none;
+    width: 1700px;
+    z-index: 11;
+}
+</style>
+</head>
+<body>
+<img src="./images/Screenshot_2025-12-18_122414-removebg-preview.png" class="reindeer reindeer1">
+<img src="./images/ChatGPT_Image_Dec_17__2025__10_35_51_PM-removebg-preview.png" class="reindeer reindeer2">
+<img src="./images/christmas-cabin-vector-sticker-cartoon_591412_wh860-removebg-preview.png" class="house">
+<h1 class="floating-title">MERRY CHRISTMAS</h1>
+<div class="container">
+    <form id="letterForm">
+        <div class="form-group">
+           <input type="text" id="recipient" required>
+            <label for="recipient">Receiver</label>
+        </div>
+
+        <div class="form-group">
+    <select id="gender" required>
+        <option value="" disabled selected></option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+    </select>
+    <label for="gender">Recipient's Gender</label>
+</div>
+
+
+        <div class="form-group">
+            <input type="text" id="name" required>
+            <label for="name">Your Name</label>
+        </div>
+
+        <div class="form-group">
+            <textarea id="message" required></textarea>
+            <label for="message">Gcash number</label>
+        </div>
+
+        <button type="submit">Generate Christmas Letter ✨</button>
+    </form>
+
+    <div id="letter"></div>
+</div>
+<img src="./images/vector-drifts-isolated-transparent-background-snow-png-snowdrifts-winter-snow-ground_156846-1329_-_Copy-removebg-preview.png" class="snow-ground">
+<audio autoplay loop>
+  <source src="./Music/tcmac.fr - family is love coco martin shorts memes stitchtricks comedyvideos fyp fypシ゚viral.mp3">
+</audio>
+<script>
+  
+    document.getElementById('letterForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const recipient = document.getElementById('recipient').value;
+    const name = document.getElementById('name').value;
+    const message = document.getElementById('message').value;
+    const gender = document.getElementById('gender').value;
+
+    let letters = [];
+
+    if (gender === "Male") {
+        letters = [
+            `Hi ${recipient}! 🎄 Malipayong Pasko! Hinaot ma-enjoy nimo ang holidays ug puno sa kalipay ug grasya. Salamat kaayo sa imong suporta ug gugma sa tibuok tuig. Ani ang gamay nako para nimo: ${message}\n\n- ${name}`,
+
+            `Dear ${recipient}, 🎁 Malipayong Pasko! Hinaot nga malipay ka ug ma-feel ang warmth sa Pasko uban sa pamilya. Ani ang gamay nako nga regalo para nimo: ${message}\n\n- ${name}`,
+
+            `Hey ${recipient}! ❄️ Merry Christmas! Salamat kaayo sa tanan nimong gibuhat para nako. Hinaot nga ma-enjoy nimo ang holidays. Ani ang gamay nako para nimo: ${message}\n\n- ${name}`,
+
+            `Hi ${recipient}! 🎅 Malipayong Pasko! Hinaot puno sa kalipay ug blessings ang imong Pasko. Salamat kaayo sa imong gugma ug suporta. Ani ang gamay nga treat: ${message}\n\n- ${name}`,
+
+            `Dear ${recipient}, 🎄 Merry Christmas! Hinaot ma-feel nimo ang warmth ug joy sa Pasko. Salamat sa imong guidance ug pagkasuporta sa tibuok tuig. Ani ang gamay nako para nimo: ${message}\n\n- ${name}`
+        ];
+    } else if (gender === "Female") {
+        letters = [
+            `Hi ${recipient}! 🎄 Malipayong Pasko! Hinaot ma-enjoy nimo ang holidays ug puno sa kalipay ug grasya. Salamat kaayo sa imong gugma ug suporta sa tibuok tuig. Ani ang gamay nako para nimo: ${message}\n\n- ${name}`,
+
+            `Dear ${recipient}, 🎁 Malipayong Pasko! Hinaot nga malipay ka ug ma-feel ang warmth sa Pasko uban sa pamilya. Ani ang gamay nako nga regalo para nimo: ${message}\n\n- ${name}`,
+
+            `Hey ${recipient}! ❄️ Merry Christmas! Salamat kaayo sa tanan nimong gibuhat para nako. Hinaot nga ma-enjoy nimo ang holidays. Ani ang gamay nako para nimo: ${message}\n\n- ${name}`,
+
+            `Hi ${recipient}! 🎅 Malipayong Pasko! Hinaot puno sa kalipay ug blessings ang imong Pasko. Salamat kaayo sa imong gugma ug suporta. Ani ang gamay nga treat: ${message}\n\n- ${name}`,
+
+            `Dear ${recipient}, 🎄 Merry Christmas! Hinaot ma-feel nimo ang warmth ug joy sa Pasko. Salamat sa imong guidance, care, ug pagkasuporta sa tibuok tuig. Ani ang gamay nako para nimo: ${message}\n\n- ${name}`
+        ];
+    }
+
+    // Pick a random letter
+    const letterText = letters[Math.floor(Math.random() * letters.length)];
+
+    const letterDiv = document.getElementById('letter');
+    letterDiv.textContent = letterText;
+    letterDiv.style.display = 'block';
+    letterDiv.scrollIntoView({ behavior: 'smooth' });
+});
+
+    // Float labels for pre-filled fields
+    document.querySelectorAll('input, select, textarea').forEach(el => {
+        if (el.value) {
+            el.nextElementSibling.style.top = '-10px';
+            el.nextElementSibling.style.fontSize = '0.8em';
+        }
+    });
+    function createSnowflakes() {
+    const snow = document.createElement("div");
+    snow.classList.add("snowflake");
+    snow.innerHTML = "❄";
+    snow.style.left = Math.random() * window.innerWidth + "px";
+    snow.style.fontSize = (Math.random() * 10 + 10) + "px";
+    snow.style.animationDuration = (Math.random() * 5 + 3) + "s";
+
+    document.body.appendChild(snow);
+
+    setTimeout(() => {
+        snow.remove();
+    }, 8000);
+}
+
+setInterval(createSnowflakes, 200);
+function createStars() {
+    for (let i = 0; i < 35; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+
+        star.style.top = Math.random() * window.innerHeight + 'px';
+        star.style.left = Math.random() * window.innerWidth + 'px';
+
+        star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        star.style.animationDelay = (Math.random() * 5) + 's';
+
+        const size = Math.random() * 12 + 14;
+        star.style.width = size + 'px';
+        star.style.height = size + 'px';
+
+        star.innerHTML = `
+            <svg viewBox="0 0 100 100">
+                <polygon
+                    points="50,0 62,38 100,50 62,62 50,100 38,62 0,50 38,38"
+                    fill="#fff8b0"
+                />
+            </svg>
+        `;
+
+        document.body.appendChild(star);
+    }
+}
+
+createStars();
+ window.addEventListener('click', function () {
+  const music = document.querySelector("audio");
+  music.play().catch(() => {});
+}, { once: true });
+</script>
+
+</body>
+</html>
